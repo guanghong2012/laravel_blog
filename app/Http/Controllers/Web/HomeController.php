@@ -41,7 +41,7 @@ class HomeController extends Controller
                 $user = User::forceCreate([
                     'name' => $request->name,
                     'phone' => $request->phone,
-                    'password' => Hash::make($request->password),
+                    'password' => $request->password,
                 ]);
                 if($user){
                     /*
