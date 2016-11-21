@@ -75,12 +75,21 @@
     </nav>
 
     <div class="login-nav">
+        @if( ! Session::get('user_id'))
         <a href="{{url('register')}}" rel="nofollow" class="register btn rbtn">
             <span class="text"> 注册</span>
         </a>
         <a href="{{url('login')}}" rel="nofollow" class="login btn wbtn">
             <span class="text"> 登录</span>
         </a>
+        @else
+            <a href="{{url('logout')}}" rel="nofollow" class="register btn rbtn">
+                <span class="text"> 退出</span>
+            </a>
+            <a href="" rel="nofollow" class="login btn wbtn">
+                <span class="text"> {{ Session::get('user_name') }}</span>
+            </a>
+        @endif
     </div>
 
 
