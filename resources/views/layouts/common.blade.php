@@ -11,7 +11,47 @@
     @section('css')
         <link href="css/index.css" rel="stylesheet">
     @show
-
+    <style>
+        #logo {    width: 260px;
+            height: 60px;
+            float: left;}
+        .login-nav {
+            display: inline-block;
+            float: left;
+            margin: 20px 0 0 8px;
+            width: 100px;
+            line-height: 48px;
+        }
+        .btn {
+            display: inline-block;
+            line-height: 1;
+            border-radius: 2px;
+            font-size: 14px;
+            padding: 0 8px;
+            height: 28px;
+            line-height: 28px;
+            background: #fff;
+            background: linear-gradient( #FAFAFA, #F2F2F2);
+            border: 1px solid #D9D9D9;
+            cursor: pointer;
+            text-decoration: none;
+            color: #444;
+            white-space: nowrap;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            user-select: none;
+            text-shadow: 0 1px 0 rgba(255,255,255,.5);
+            text-align: center;
+        }
+        .rbtn {
+            background: #E53E49;
+            background: linear-gradient( #E53E49, #D43636);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,.08),0 1px 0 rgba(255,255,255,.3);
+            text-shadow: 0 -1px 0 rgba(0,0,0,.1);
+            color: #fff!important;
+            border: 1px solid #C90000;
+        }
+    </style>
     <!--[if lt IE 9]>
     <script src="{{asset('js/modernizr.js')}}"></script>
     <![endif]-->
@@ -23,7 +63,7 @@
 <body>
 <header>
     <div id="logo"><a href="/"></a></div>
-    <div>
+
     <nav class="topnav" id="topnav">
         <a href="index.html"><span>首页</span><span class="en">Protal</span></a>
         <a href="about.html"><span>关于我</span><span class="en">About</span></a>
@@ -35,14 +75,14 @@
     </nav>
 
     <div class="login-nav">
-        <a href="" rel="nofollow" class="register btn rbtn">
+        <a href="{{url('register')}}" rel="nofollow" class="register btn rbtn">
             <span class="text"> 注册</span>
         </a>
-        <a href="" rel="nofollow" class="login btn wbtn">
+        <a href="{{url('login')}}" rel="nofollow" class="login btn wbtn">
             <span class="text"> 登录</span>
         </a>
     </div>
-        </div>
+
 
 </header>
 
