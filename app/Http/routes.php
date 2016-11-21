@@ -15,4 +15,6 @@
 //    return view('web/home/welcome');
 //});
 Route::get('/','Web\\HomeController@index');
-Route::get('register','Web\\HomeController@register');
+Route::any('register','Web\\HomeController@register');
+Route::any('login','Web\\HomeController@login');
+Route::get('logout','Web\\HomeController@logout');

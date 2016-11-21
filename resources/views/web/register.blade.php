@@ -137,7 +137,7 @@
                 </div>
             </form>
 
-            <p class="agreement-tip">点击「注册」按钮，即代表你同意<a href="/terms" target="_blank">《{{config("app.name")}} 协议》</a></p>
+            <p class="agreement-tip">点击「注册」按钮，即代表你同意<a href="" target="_blank">《{{config("app.name")}} 协议》</a></p>
 
         </div>
     </div>
