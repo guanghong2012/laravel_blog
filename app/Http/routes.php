@@ -18,5 +18,6 @@ Route::get('/','Web\\HomeController@index');
 Route::any('register','Web\\HomeController@register');
 Route::any('login','Web\\HomeController@login');
 Route::get('logout','Web\\HomeController@logout');
+Route::get('lists/pid/{pid}','Web\\ArticleController@lists');
 
 Route::controller("api","Web\\GlobalController");//获取图片验证码

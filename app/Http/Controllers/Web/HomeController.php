@@ -9,14 +9,21 @@ use App\Http\Controllers\Controller;
 use App\Models\User;//这个必须有，引入model，不然无法获取数据库数据
 use Illuminate\Support\Facades\Validator;
 use Hash;
+use App\Models\Article;//这个必须有，引入model，不然无法获取数据库数据
+use App\Models\Category;//这个必须有，引入model，不然无法获取数据库数据
 
 class HomeController extends Controller
 {
     //首页
     public function index()
     {
+        $article = Article::take(5)->orderBy('id','desc')->get();
+        foreach($article as $key=>$value){
+            $cate_name = Category::where('id','=',$value->pid)->pluck('name');//获取当前文章分类名称
+            $article[$key]['cate_name'] = $cate_name[0];
+        }
 
-        return view('web.home',['title'=>'博客首页']);
+        return view('web.home',['title'=>'博客首页','article'=>$article]);
     }
     
     //注册 

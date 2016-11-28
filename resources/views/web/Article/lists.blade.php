@@ -1,53 +1,42 @@
 @extends('layouts.common')
-
+@section('css')
+    <link href="{{asset('css/style.css')}}" rel="stylesheet">
+@stop
 @section('title')
     {{@$title}}
 @stop
 
 @section('content')
-    <div class="banner">
-        <section class="box">
-            <ul class="texts">
-                <p>打了死结的青春，捆死一颗苍白绝望的灵魂。</p>
-                <p>为自己掘一个坟墓来葬心，红尘一梦，不再追寻。</p>
-                <p>加了锁的青春，不会再因谁而推开心门。</p>
-            </ul>
-            <div class="avatar"><a href="#"><span>后盾</span></a> </div>
-        </section>
-    </div>
-    <div class="template">
-        <div class="box">
-            <h3>
-                <p><span>个人博客</span>模板 Templates</p>
-            </h3>
-            <ul>
-                <li><a href="/"  target="_blank"><img src="images/01.jpg"></a><span>仿新浪博客风格·梅——古典个人博客模板</span></li>
-                <li><a href="/" target="_blank"><img src="images/02.jpg"></a><span>黑色质感时间轴html5个人博客模板</span></li>
-                <li><a href="/"  target="_blank"><img src="images/03.jpg"></a><span>Green绿色小清新的夏天-个人博客模板</span></li>
-                <li><a href="/" target="_blank"><img src="images/04.jpg"></a><span>女生清新个人博客网站模板</span></li>
-                <li><a href="/"  target="_blank"><img src="images/02.jpg"></a><span>黑色质感时间轴html5个人博客模板</span></li>
-                <li><a href="/"  target="_blank"><img src="images/03.jpg"></a><span>Green绿色小清新的夏天-个人博客模板</span></li>
-            </ul>
-        </div>
-    </div>
-    <article>
-        <h2 class="title_tj">
-            <p>文章<span>推荐</span></p>
-        </h2>
-        <div class="bloglist left">
-            @foreach($article as $key=>$value)
-            <h3>{{$value->name}}</h3>
-            <figure><img src="images/001.png"></figure>
-            <ul>
+    <article class="blogs">
+        <h1 class="t_nav"><span>{{$category->description}}</span><a href="/" class="n1">网站首页</a><a href="/" class="n2">{{$category->name}}</a></h1>
+        <div class="newblog left">
+            @foreach($articles as $key=>$value)
+            <h2>{{$value->name}}</h2>
+            <p class="dateview"><span>发布时间：{{$value->created_at}}</span><span>作者：曙光</span><span>分类：[<a href="{{url('lists/pid/'.$value->pid)}}">{{$category->name}}</a>]</span></p>
+            <figure><img src="{{asset('images/001.png')}}"></figure>
+            <ul class="nlist">
                 <p>{{str_limit($value->description,100)}}</p>
                 <a title="/" href="/" target="_blank" class="readmore">阅读全文>></a>
             </ul>
-            <p class="dateview"><span>{{$value->updated_at}}</span><span>作者：曙光</span><span>个人博客：[<a href="{{url('lists/pid/'.$value->pid)}}">{{$value->cate_name}}</a>]</span></p>
+            <div class="line"></div>
             @endforeach
 
+            <div class="page">
+
+                <ul class="pagination"><li class="disabled"><span>«</span></li> <li class="active"><span>1</span></li><li><a href="http://blog.hd/admin/article?page=2">2</a></li> <li><a href="http://blog.hd/admin/article?page=2" rel="next">»</a></li></ul>
+
+
+            </div>
         </div>
         <aside class="right">
-            <div class="weather"><iframe width="250" scrolling="no" height="60" frameborder="0" allowtransparency="true" src="http://i.tianqi.com/index.php?c=code&id=12&icon=1&num=1"></iframe></div>
+            <div class="rnav">
+                <ul>
+                    <li class="rnav1"><a href="/download/" target="_blank">日记</a></li>
+                    <li class="rnav2"><a href="/newsfree/" target="_blank">程序人生</a></li>
+                    <li class="rnav3"><a href="/web/" target="_blank">欣赏</a></li>
+                    <li class="rnav4"><a href="/newshtml5/" target="_blank">短信祝福</a></li>
+                </ul>
+            </div>
             <div class="news">
                 <h3>
                     <p>最新<span>文章</span></p>
@@ -72,12 +61,11 @@
                     <li><a href="/" title="做网站到底需要什么?" target="_blank">做网站到底需要什么?</a></li>
                     <li><a href="/" title="企业做网站具体流程步骤" target="_blank">企业做网站具体流程步骤</a></li>
                 </ul>
-                <h3 class="links">
-                    <p>友情<span>链接</span></p>
-                </h3>
-                <ul class="website">
-                    <li><a href="http://www.houdunwang.com">后盾网</a></li>
-                    <li><a href="http://bbs.houdunwang.com">后盾论坛</a></li>
+            </div>
+            <div class="visitors">
+                <h3><p>最近访客</p></h3>
+                <ul>
+
                 </ul>
             </div>
             <!-- Baidu Button BEGIN -->
