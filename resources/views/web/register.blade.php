@@ -48,6 +48,8 @@
                 <a href="javascript:void(0);">注册</a>
                 &nbsp;|&nbsp;
                 <a class="no-active" href="{{ url("login") }}">登录</a>
+                &nbsp;|&nbsp;
+                <a class="no-active" href="{{ url("/") }}">首页</a>
             </div>
 
         </div>
@@ -151,6 +153,8 @@
                     <a class="no-active" href="{{ url("register") }}">注册</a>
                     &nbsp;|&nbsp;
                     <a href="javascript:void(0);">登录</a>
+                    &nbsp;|&nbsp;
+                    <a class="no-active" href="{{ url("/") }}">首页</a>
                 </div>
             </div>
 
