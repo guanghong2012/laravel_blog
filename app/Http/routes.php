@@ -18,6 +18,7 @@ Route::get('/','Web\\HomeController@index');
 Route::any('register','Web\\HomeController@register');
 Route::any('login','Web\\HomeController@login');
 Route::get('logout','Web\\HomeController@logout');
-Route::get('lists/pid/{pid}','Web\\ArticleController@lists');
+Route::get('lists/pid/{pid}','Web\\ArticleController@lists');//文章列表
+Route::get('detail/id/{id}','Web\\ArticleController@detail');//文章详情
 
 Route::controller("api","Web\\GlobalController");//获取图片验证码

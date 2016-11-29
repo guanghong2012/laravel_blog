@@ -8,7 +8,7 @@
 
 @section('content')
     <article class="blogs">
-        <h1 class="t_nav"><span>{{$category->description}}</span><a href="/" class="n1">网站首页</a><a href="/" class="n2">{{$category->name}}</a></h1>
+        <h1 class="t_nav"><span>{{$category->description}}</span><a href="/" class="n1">网站首页</a><a href="{{ url('lists/pid/'.$category->id) }}" class="n2">{{$category->name}}</a></h1>
         <div class="newblog left">
             @foreach($articles as $key=>$value)
             <h2>{{$value->name}}</h2>
@@ -16,14 +16,14 @@
             <figure><img src="{{asset('images/001.png')}}"></figure>
             <ul class="nlist">
                 <p>{{str_limit($value->description,100)}}</p>
-                <a title="/" href="/" target="_blank" class="readmore">阅读全文>></a>
+                <a title="{{ $value->title }}" href="{{ url('detail/id/'.$value->id) }}" target="_blank" class="readmore">阅读全文>></a>
             </ul>
             <div class="line"></div>
             @endforeach
 
             <div class="page">
-
-                <ul class="pagination"><li class="disabled"><span>«</span></li> <li class="active"><span>1</span></li><li><a href="http://blog.hd/admin/article?page=2">2</a></li> <li><a href="http://blog.hd/admin/article?page=2" rel="next">»</a></li></ul>
+                {{ $articles->render() }}
+                <!--<ul class="pagination"><li class="disabled"><span>«</span></li> <li class="active"><span>1</span></li><li><a href="http://blog.hd/admin/article?page=2">2</a></li> <li><a href="http://blog.hd/admin/article?page=2" rel="next">»</a></li></ul>-->
 
 
             </div>
