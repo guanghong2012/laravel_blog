@@ -21,7 +21,8 @@ class CreateArticlesTable extends Migration
             $table->string('description')->comment("文章描述");
             $table->string('images')->comment("文章图片路径");
             $table->text('content')->comment("文章内容");
-            $table->integer('click')->comment("浏览次数");
+            $table->integer('click')->comment("浏览次数")->default(0);
+            $table->integer('sort')->comment("排序")->default(0);
             $table->timestamps();
         });
     }

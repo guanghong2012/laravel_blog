@@ -40,7 +40,7 @@
             <figure><img src="images/001.png"></figure>
             <ul>
                 <p>{{str_limit($value->description,100)}}</p>
-                <a title="/" href="/" target="_blank" class="readmore">阅读全文>></a>
+                <a title="{{ $value->title }}" href="{{ url('detail/id/'.$value->id) }}" target="_blank" class="readmore">阅读全文>></a>
             </ul>
             <p class="dateview"><span>{{$value->updated_at}}</span><span>作者：曙光</span><span>个人博客：[<a href="{{url('lists/pid/'.$value->pid)}}">{{$value->cate_name}}</a>]</span></p>
             @endforeach

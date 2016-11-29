@@ -17,7 +17,7 @@ class ArticleController extends Controller
     public function lists($pid)
     {
         $category = Category::where('id','=',$pid)->first();
-        $articles = Article::where('pid','=',$pid)->paginate(10);
+        $articles = Article::where('pid','=',$pid)->orderBy('sort','desc')->paginate(10);
 
         return view('web/Article/lists',['title'=>'文章列表','category'=>$category,'articles'=>$articles]);
     }
@@ -30,9 +30,44 @@ class ArticleController extends Controller
         if(!$id){
             return back();
         }
+        Article::where('id','=',$id)->increment('click');//浏览数自增
         $info = Article::where('id','=',$id)->first();
         $category = Category::where('id','=',$info->pid)->first();
-        return view('web/Article/detail',['title' => $info->title,'info' => $info, 'category' => $category]);
+        //上一篇 下一篇
+        $all_article = Article::where('pid','=',$info->pid)->orderBy('sort','desc')->pluck('id')->toArray();
+        foreach($all_article as $key=>$val){
+            if($val==$id){
+                if($key-1>=0){
+                    $pre = $all_article[$key-1];
+                    $pre_info = Article::where('id','=',$pre)->pluck('title')->toArray();
+                    $pre_title = $pre_info[0];
+                }else{
+                    $pre = 0;
+                    $pre_title = '没有了';
+                }
+                if($key+1 <= count($all_article)-1){
+                    $next = $all_article[$key+1];
+                    $next_info = Article::where('id','=',$next)->pluck('title')->toArray();
+                    $next_title = $next_info[0];
+                }else{
+                    $next = 0;
+                    $next_title = '敬请期待';
+                }
+                break;
+            }
+        }
+
+
+
+        return view('web/Article/detail',[
+            'title' => $info->title,
+            'info' => $info,
+            'category' => $category,
+            'pre' => $pre,
+            'pre_title' => $pre_title,
+            'next' => $next,
+            'next_title' => $next_title
+        ]);
     }
 
 }
