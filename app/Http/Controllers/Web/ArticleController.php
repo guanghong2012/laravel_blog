@@ -18,8 +18,17 @@ class ArticleController extends Controller
     {
         $category = Category::where('id','=',$pid)->first();
         $articles = Article::where('pid','=',$pid)->orderBy('sort','desc')->paginate(10);
-
-        return view('web/Article/lists',['title'=>'文章列表','category'=>$category,'articles'=>$articles]);
+        //最新文章
+        $new_article = Article::take(8)->orderBy('created_at','desc')->get();//最新文章8篇
+        //点击排行
+        $hot_article = Article::take(5)->orderBy('click','desc')->get();//点击排行5篇
+        return view('web/Article/lists',[
+            'title'=>'文章列表',
+            'category'=>$category,
+            'articles'=>$articles,
+            'new_article' => $new_article,
+            'hot_article' => $hot_article
+        ]);
     }
 
     /*

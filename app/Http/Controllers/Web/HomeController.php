@@ -17,13 +17,17 @@ class HomeController extends Controller
     //首页
     public function index()
     {
-        $article = Article::take(5)->orderBy('id','desc')->get();
+        $article = Article::take(5)->orderBy('sort','desc')->get();//推荐文章5篇
         foreach($article as $key=>$value){
             $cate_name = Category::where('id','=',$value->pid)->pluck('name');//获取当前文章分类名称
             $article[$key]['cate_name'] = $cate_name[0];
         }
+        //最新文章
+        $new_article = Article::take(8)->orderBy('created_at','desc')->get();//最新文章8篇
+        //点击排行
+        $hot_article = Article::take(5)->orderBy('click','desc')->get();//点击排行5篇
 
-        return view('web.home',['title'=>'博客首页','article'=>$article]);
+        return view('web.home',['title'=>'博客首页','article'=>$article,'new_article' => $new_article,'hot_article' => $hot_article]);
     }
     
     //注册 
