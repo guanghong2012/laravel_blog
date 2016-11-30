@@ -42,7 +42,7 @@
                 <p>{{str_limit($value->description,100)}}</p>
                 <a title="{{ $value->title }}" href="{{ url('detail/id/'.$value->id) }}" target="_blank" class="readmore">阅读全文>></a>
             </ul>
-            <p class="dateview"><span>{{$value->updated_at}}</span><span>作者：曙光</span><span>个人博客：[<a href="{{url('lists/pid/'.$value->pid)}}">{{$value->cate_name}}</a>]</span></p>
+            <p class="dateview"><span>{{substr($value->created_at,0,10)}}</span><span>作者：曙光</span><span>个人博客：[<a href="{{url('lists/pid/'.$value->pid)}}">{{$value->cate_name}}</a>]</span></p>
             @endforeach
 
         </div>

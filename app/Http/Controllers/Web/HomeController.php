@@ -14,6 +14,7 @@ use App\Models\Category;//这个必须有，引入model，不然无法获取数�
 
 class HomeController extends Controller
 {
+
     //首页
     public function index()
     {

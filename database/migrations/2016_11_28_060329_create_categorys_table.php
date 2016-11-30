@@ -16,7 +16,9 @@ class CreateCategorysTable extends Migration
             $table->increments('id');
             $table->integer('pid')->comment("父级id：默认0")->default(0);
             $table->string('name')->comment("分类名称");
+            $table->string('title')->comment("分类标题");
             $table->string('description')->comment("分类描述");
+            $table->tinyInteger('sort')->comment("排序")->default(0);
             $table->timestamps();
         });
     }
