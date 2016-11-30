@@ -11,7 +11,7 @@
         <h1 class="t_nav"><span>您当前的位置：<a href="{{ url('/') }}">首页</a>&nbsp;&gt;&nbsp;<a href="{{ url('lists/pid/'.$category->id) }}">{{ $category->name }}</a></span><a href="{{ url('/') }}" class="n1">网站首页</a><a href="{{ url('lists/pid/'.$category->id) }}" class="n2">{{ $category->name }}</a></h1>
         <div class="index_about">
             <h2 class="c_titile">{{ $info->title }}</h2>
-            <p class="box_c"><span class="d_time">发布时间：{{ $info->created_at }}</span><span>编辑：曙光</span><span>查看次数：{{ $info->click }}</span></p>
+            <p class="box_c"><span class="d_time">发布时间：{{ substr($info->created_at,0,10) }}</span><span>编辑：曙光</span><span>查看次数：{{ $info->click }}</span></p>
             <ul class="infos">
                 {!! $info->content !!}
             </ul>
@@ -59,24 +59,17 @@
                     <p>栏目<span>最新</span></p>
                 </h3>
                 <ul class="rank">
-                    <li><a href="/" title="Column 三栏布局 个人网站模板" target="_blank">Column 三栏布局 个人网站模板</a></li>
-                    <li><a href="/" title="with love for you 个人网站模板" target="_blank">with love for you 个人网站模板</a></li>
-                    <li><a href="/" title="免费收录网站搜索引擎登录口大全" target="_blank">免费收录网站搜索引擎登录口大全</a></li>
-                    <li><a href="/" title="做网站到底需要什么?" target="_blank">做网站到底需要什么?</a></li>
-                    <li><a href="/" title="企业做网站具体流程步骤" target="_blank">企业做网站具体流程步骤</a></li>
-                    <li><a href="/" title="建站流程篇——教你如何快速学会做网站" target="_blank">建站流程篇——教你如何快速学会做网站</a></li>
-                    <li><a href="/" title="box-shadow 阴影右下脚折边效果" target="_blank">box-shadow 阴影右下脚折边效果</a></li>
-                    <li><a href="/" title="打雷时室内、户外应该需要注意什么" target="_blank">打雷时室内、户外应该需要注意什么</a></li>
+                    @foreach($new_article as $key=>$val)
+                        <li><a href="{{ url('detail/id/'.$val->id) }}" title="{{ $val->title }}" target="_blank">{{ $val->name }}</a></li>
+                    @endforeach
                 </ul>
                 <h3 class="ph">
                     <p>点击<span>排行</span></p>
                 </h3>
                 <ul class="paih">
-                    <li><a href="/" title="Column 三栏布局 个人网站模板" target="_blank">Column 三栏布局 个人网站模板</a></li>
-                    <li><a href="/" title="withlove for you 个人网站模板" target="_blank">with love for you 个人网站模板</a></li>
-                    <li><a href="/" title="免费收录网站搜索引擎登录口大全" target="_blank">免费收录网站搜索引擎登录口大全</a></li>
-                    <li><a href="/" title="做网站到底需要什么?" target="_blank">做网站到底需要什么?</a></li>
-                    <li><a href="/" title="企业做网站具体流程步骤" target="_blank">企业做网站具体流程步骤</a></li>
+                    @foreach($hot_article as $key=>$val)
+                        <li><a href="{{ url('detail/id/'.$val->id) }}" title="{{ $val->title }}" target="_blank">{{ $val->name }}</a></li>
+                    @endforeach
                 </ul>
             </div>
             <div class="visitors">

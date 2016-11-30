@@ -42,6 +42,12 @@ class ArticleController extends Controller
         Article::where('id','=',$id)->increment('click');//浏览数自增
         $info = Article::where('id','=',$id)->first();
         $category = Category::where('id','=',$info->pid)->first();
+
+        //最新文章
+        $new_article = Article::take(8)->orderBy('created_at','desc')->get();//最新文章8篇
+        //点击排行
+        $hot_article = Article::take(5)->orderBy('click','desc')->get();//点击排行5篇
+
         //上一篇 下一篇
         $all_article = Article::where('pid','=',$info->pid)->orderBy('sort','desc')->pluck('id')->toArray();
         foreach($all_article as $key=>$val){
@@ -75,7 +81,9 @@ class ArticleController extends Controller
             'pre' => $pre,
             'pre_title' => $pre_title,
             'next' => $next,
-            'next_title' => $next_title
+            'next_title' => $next_title,
+            'new_article' => $new_article,
+            'hot_article' => $hot_article
         ]);
     }
 
