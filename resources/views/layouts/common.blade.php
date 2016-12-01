@@ -65,7 +65,7 @@
 
     <nav class="topnav" id="topnav">
         <a href="{{url('/')}}"><span>首页</span><span class="en">Protal</span></a>
-        <a href="about.html"><span>关于我</span><span class="en">About</span></a>
+        <a href="{{ url('about') }}" target="_blank"><span>关于我</span><span class="en">About</span></a>
         <a href="share.html"><span>模板分享</span><span class="en">Share</span></a>
         <a href="knowledge.html"><span>学无止境</span><span class="en">Learn</span></a>
         @foreach($allcategorys as $key=>$val)

@@ -136,6 +136,13 @@ class HomeController extends Controller
         session()->forget('user_login_number');
         return redirect("/");
     }
+
+    //关于我
+    public function about()
+    {
+
+        return view('web.about',['title'=>'关于我']);
+    }
     
     
 }
