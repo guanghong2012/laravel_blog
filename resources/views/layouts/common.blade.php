@@ -71,7 +71,7 @@
         @foreach($allcategorys as $key=>$val)
         <a href="{{ url('lists/pid/'.$val->id) }}"><span>{{ $val->name }}</span><span class="en">{{ $val->title }}</span></a>
         @endforeach
-        <a href="book.html"><span>留言版</span><span class="en">Gustbook</span></a>
+        <a href="{{ url('comment') }}"><span>留言版</span><span class="en">Gustbook</span></a>
     </nav>
 
     <div class="login-nav">

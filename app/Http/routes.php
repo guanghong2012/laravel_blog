@@ -21,5 +21,6 @@ Route::get('logout','Web\\HomeController@logout');
 Route::get('lists/pid/{pid}','Web\\ArticleController@lists');//文章列表
 Route::get('detail/id/{id}','Web\\ArticleController@detail');//文章详情
 Route::get('about','Web\\HomeController@about');//关于我
+Route::get('comment','Web\\HomeController@comment');//留言板
 
 Route::controller("api","Web\\GlobalController");//获取图片验证码

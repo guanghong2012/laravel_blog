@@ -143,6 +143,12 @@ class HomeController extends Controller
 
         return view('web.about',['title'=>'关于我']);
     }
-    
+
+    //留言板
+    public function comment()
+    {
+
+        return view('web.comment',['title' => '留言板']);
+    }
     
 }
