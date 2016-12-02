@@ -24,3 +24,9 @@ Route::get('about','Web\\HomeController@about');//关于我
 Route::any('comment','Web\\HomeController@comment');//留言板
 
 Route::controller("api","Web\\GlobalController");//获取图片验证码
+
+//路由群组 -- 后台路由
+Route::group(['prefix'=>'newwebadmin','namespace'=>'Admin'],function(){
+    Route::get('login','IndexController@login');
+    Route::get('index','IndexController@index');
+});
