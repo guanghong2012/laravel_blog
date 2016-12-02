@@ -9,6 +9,7 @@ return array(
     'ArticlesTableSeeder' => $baseDir . '/database/seeds/ArticlesTableSeeder.php',
     'CreateArticlesTable' => $baseDir . '/database/migrations/2016_11_28_060909_create_articles_table.php',
     'CreateCategorysTable' => $baseDir . '/database/migrations/2016_11_28_060329_create_categorys_table.php',
+    'CreateCommentsTable' => $baseDir . '/database/migrations/2016_12_02_064120_create_comments_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
