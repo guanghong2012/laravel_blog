@@ -54,7 +54,7 @@
     <!--[if lt IE 9]>
     <script src="{{asset('js/modernizr.js')}}"></script>
     <![endif]-->
-        <script src="{{asset('js/silder.js')}}"></script>
+        <!--<script src="{{asset('js/silder.js')}}"></script>-->
     @section('script')
 
     @show
