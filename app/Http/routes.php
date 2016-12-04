@@ -26,7 +26,9 @@ Route::any('comment','Web\\HomeController@comment');//留言板
 Route::controller("api","Web\\GlobalController");//获取图片验证码
 
 //路由群组 -- 后台路由
-Route::group(['prefix'=>'newwebadmin','namespace'=>'Admin'],function(){
-    Route::get('login','IndexController@login');
-    Route::get('index','IndexController@index');
+Route::group(['prefix'=>'newwebadmin','namespace'=>'Admin','middleware' => 'admin'],function(){
+    Route::get('index','IndexController@index');//后台首页
 });
+
+Route::get('newwebadmin/login',"Admin\\IndexController@login");//后台登录
+Route::post('newwebadmin/dologin','Admin\\IndexController@dologin');//后台登录处理
