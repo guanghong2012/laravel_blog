@@ -28,6 +28,8 @@ Route::controller("api","Web\\GlobalController");//获取图片验证码
 //路由群组 -- 后台路由
 Route::group(['prefix'=>'newwebadmin','namespace'=>'Admin','middleware' => 'admin'],function(){
     Route::get('index','IndexController@index');//后台首页
+    Route::get('admin_user_index','AdminUserController@index');//后台管理员列表
+    Route::any('admin_user_edit/id/{id}','AdminUserController@edit');//后台管理员列表
 });
 
 Route::get('newwebadmin/login',"Admin\\IndexController@login");//后台登录

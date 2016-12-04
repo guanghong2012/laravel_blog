@@ -109,6 +109,31 @@
 
                 <li>
                     <a href="#" class="dropdown-toggle">
+                        <i class="icon-group"></i>
+                        <span class="menu-text"> 管理员管理 </span>
+
+                        <b class="arrow icon-angle-down"></b>
+                    </a>
+
+                    <ul class="submenu">
+                        <li>
+                            <a href="{{ url('newwebadmin/admin_user_index') }}">
+                                <i class="icon-double-angle-right"></i>
+                                管理员列表
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="jqgrid.html">
+                                <i class="icon-double-angle-right"></i>
+                                管理员添加
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#" class="dropdown-toggle">
                         <i class="icon-user"></i>
                         <span class="menu-text"> 会员管理 </span>
 
@@ -117,7 +142,7 @@
 
                     <ul class="submenu">
                         <li>
-                            <a href="tables.html">
+                            <a href="{{ url('newwebadmin/') }}">
                                 <i class="icon-double-angle-right"></i>
                                 会员列表
                             </a>
