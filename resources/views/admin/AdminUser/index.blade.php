@@ -49,7 +49,7 @@
                 <!--右侧部分开始-->
 
                 <div class="table-header">
-                    <button class="btn btn-sm btn-success" onclick="add();"><i class="icon-plus"></i>新增</button>
+                    <button class="btn btn-sm btn-success" onclick="location.href='{{ url('newwebadmin/admin_user_add') }}';"><i class="icon-plus"></i>新增</button>
                     <button class="btn btn-sm btn-danger" onclick="del();"><i class="icon-trash"></i>移到回收站</button>
 
                 </div><!--表格上方蓝色部分 -->
