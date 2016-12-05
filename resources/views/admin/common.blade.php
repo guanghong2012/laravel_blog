@@ -124,7 +124,7 @@
                         </li>
 
                         <li>
-                            <a href="jqgrid.html">
+                            <a href="{{ url('newwebadmin/admin_user_add') }}">
                                 <i class="icon-double-angle-right"></i>
                                 管理员添加
                             </a>
@@ -132,7 +132,7 @@
                     </ul>
                 </li>
 
-                <li>
+                <li {!! isset($user_active) ? 'class="open active"' : '' !!}>
                     <a href="#" class="dropdown-toggle">
                         <i class="icon-user"></i>
                         <span class="menu-text"> 会员管理 </span>
@@ -140,9 +140,9 @@
                         <b class="arrow icon-angle-down"></b>
                     </a>
 
-                    <ul class="submenu">
+                    <ul class="submenu" {!! isset($user_active) ? 'style="display: block;"' : '' !!}>
                         <li>
-                            <a href="{{ url('newwebadmin/') }}">
+                            <a href="{{ url('newwebadmin/user') }}">
                                 <i class="icon-double-angle-right"></i>
                                 会员列表
                             </a>

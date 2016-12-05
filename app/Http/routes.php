@@ -31,6 +31,8 @@ Route::group(['prefix'=>'newwebadmin','namespace'=>'Admin','middleware' => 'admi
     Route::get('admin_user_index','AdminUserController@index');//后台管理员列表
     Route::any('admin_user_edit/id/{id}','AdminUserController@edit');//后台管理员列表
     Route::any('set_effect','AjaxController@set_effect');//后台设置信息状态
+    Route::any('admin_user_add','AdminUserController@add');//后台管理员添加
+    Route::resource('user', 'UserController');//资源路由 用户管理
 });
 
 Route::get('newwebadmin/login',"Admin\\IndexController@login");//后台登录
