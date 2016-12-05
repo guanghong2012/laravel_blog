@@ -99,7 +99,7 @@
             </div><!-- #sidebar-shortcuts -->
 
             <ul class="nav nav-list">
-                <li class="active">
+                <li {!! isset($dashboard_active) ? 'class="active"' : '' !!}} >
                     <a href="{{ url('newwebadmin/index') }}">
                         <i class="icon-dashboard"></i>
                         <span class="menu-text"> 控制台 </span>
@@ -107,7 +107,7 @@
                 </li>
 
 
-                <li>
+                <li {!! isset($adminuser_active) ? 'class="open active"' : '' !!}>
                     <a href="#" class="dropdown-toggle">
                         <i class="icon-group"></i>
                         <span class="menu-text"> 管理员管理 </span>
@@ -115,7 +115,7 @@
                         <b class="arrow icon-angle-down"></b>
                     </a>
 
-                    <ul class="submenu">
+                    <ul class="submenu" {!! isset($adminuser_active) ? 'style="display: block;"' : '' !!} >
                         <li>
                             <a href="{{ url('newwebadmin/admin_user_index') }}">
                                 <i class="icon-double-angle-right"></i>

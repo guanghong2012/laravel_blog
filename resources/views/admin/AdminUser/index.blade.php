@@ -90,15 +90,21 @@
                             <td align="center"><label><input type="checkbox" name="key" class="ace" value="{{ $val['id'] }}" /><span class="lbl"></span></label></td>
                             <td>{{ $val['id'] }}</td>
                             <td><a href="{{ url('newwebadmin/admin_user_edit/id/'.$val['id']) }}">{{ $val['adm_name'] }}</a></td>
-                            <td>超级管理员</td>
+                            <td>
+                                @if($val['role_id'] == 1)
+                                    超级管理员
+                                @else
+                                    网站管理员
+                                @endif
+                            </td>
                             <td>{{ date('Y-m-d H:i:s',$val['login_time']) }}</td>
                             <td>{{ $val['login_ip'] }}</td>
                             <td>
                                 <label class="pull-center inline">
                                     @if($val['is_effect'] == 1)
-                                    <input  checked type="checkbox" class="ace ace-switch ace-switch-3" onclick="set_effect(1,this);" />
+                                    <input  checked type="checkbox" class="ace ace-switch ace-switch-3" onclick="set_effect({{$val['id']}},this);" />
                                     @else
-                                    <input type="checkbox" class="ace ace-switch ace-switch-3" onclick="set_effect(0,this);" />
+                                    <input type="checkbox" class="ace ace-switch ace-switch-3" onclick="set_effect({{$val['id']}},this);" />
                                     @endif
                                     <span class="lbl"></span>
                                 </label>
@@ -141,5 +147,17 @@
 
                 <!--当前页面需要用到的js-->
 @section('page_script')
-
+<script>
+    function set_effect(id,obj){
+        $.ajax({
+            type:"POST",
+            url:"{{ url('newwebadmin/set_effect') }}",
+            data:{'table':'Admins',id:id,'_token':"<?php echo csrf_token();?>"},
+            dataType:"json",
+            success:function(data){
+                //alert(data.is_effect);
+            }
+        })
+    }
+</script>
 @stop

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Hash;
 use App\Models\Admin;//这个必须有，引入model，不然无法获取数据库数据
@@ -28,7 +29,7 @@ class IndexController extends Controller
         $statistics['time'] =  Carbon::createFromDate();
         $statistics['server_name'] = $_SERVER['SERVER_NAME'] . ' [ ' . gethostbyname($_SERVER['SERVER_NAME']) . ' ]';
         $statistics['space'] = round((disk_free_space(".") / (1024 * 1024)), 2) . 'M';
-        return view('admin/Index/index',['title' => '后台首页','statistics' => $statistics]);
+        return view('admin/Index/index',['title' => '后台首页','statistics' => $statistics,'dashboard_active'=>'active']);
     }
     
     /*
@@ -76,7 +77,6 @@ class IndexController extends Controller
         return back()->withErrors($validator)->withInput();
 
     }
-    
-    
+
     
 }

@@ -55,6 +55,7 @@
                 </div><!--表格上方蓝色部分 -->
                 <div class="hr hr-10"></div>
                 <form class="form-horizontal" action="" method="post" role="form">
+                    {{ csrf_field() }}
                     <div class="form-group">
 
                         <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 管理员名称: </label>
@@ -90,7 +91,9 @@
                         <div class="col-sm-3">
                             <select class="form-control" id="form-field-select-1" name="role_id">
                                 <option value="" rel="0">请选择权限</option>
-                                <option value="1" selected="selected" >超级管理员</option><option value="2"  >网站管理员</option>			</select>
+                                <option value="1" @if($info->role_id == 1) selected="selected" @endif >超级管理员</option>
+                                <option value="2" @if($info->role_id == 2) selected="selected" @endif >网站管理员</option>
+                            </select>
                         </div>
 
                     </div>
@@ -129,7 +132,7 @@
                             <!--隐藏元素-->
                             <button class="btn btn-info" type="submit">
                                 <i class="icon-ok bigger-110"></i>
-                                新增			</button>
+                                确定			</button>
 
                             &nbsp; &nbsp; &nbsp;
                             <button class="btn" type="reset">
@@ -149,4 +152,18 @@
 
 
 
+@stop
+
+<!--当前页面需要用到的js-->
+@section('page_script')
+    <script src="{{ asset('/layer/layer.js?v=2.4') }}"></script>
+    <script>
+        @if( Session::has('pageMsg') )
+        layer.alert('{{Session::get('pageMsg')}}', {
+            icon: 5,
+            shadeClose: true,
+            title: "操作失败"
+        });
+        @endif
+    </script>
 @stop
