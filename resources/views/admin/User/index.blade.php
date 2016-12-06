@@ -53,7 +53,7 @@
 
 
                 <div class="table-header">
-                    <button class="btn btn-sm btn-success" onclick="add();"><i class="icon-plus"></i>新增</button>
+                    <button class="btn btn-sm btn-success" onclick="location.href='{{ url('newwebadmin/user/create') }}';"><i class="icon-plus"></i>新增</button>
                     <button class="btn btn-sm btn-danger" onclick="foreverdel();"><i class="icon-trash"></i>删除</button>
 
                 </div><!--表格上方蓝色部分 -->
@@ -81,7 +81,7 @@
                     <table id="sample-table-1" class="table table-striped table-bordered table-hover" cellpadding=0 cellspacing=0 >
                         <thead>
                         <tr>
-                            <th class="center"><label><input type="checkbox" id="check" class="ace" ><span class="lbl"></span></label></th>
+                            <th class="center"><label><input type="checkbox" id="check" class="ace checkbox" ><span class="lbl"></span></label></th>
                             <th width="50px    ">
                                 <a href="javascript:sortBy('id','1','index')" title="按照编号升序排列 ">编号<img src="{{ asset('admin_assets/images/desc.gif') }}" width="12" height="17" border="0" align="absmiddle"></a>
                             </th>
@@ -96,7 +96,7 @@
                         <tbody>
                         @foreach($users as $key=>$val)
                         <tr>
-                            <td align="center"><label><input type="checkbox" name="key" class="ace" value="{{ $val->id }}" /><span class="lbl"></span></label></td>
+                            <td align="center"><label><input type="checkbox" name="key" class="ace checkbox" value="{{ $val->id }}" /><span class="lbl"></span></label></td>
                             <td>{{ $val->id }}</td>
                             <td><a href="{{ url('newwebadmin/user/'.$val->id.'/edit') }}">{{ $val->name }}</a></td>
                             <td>{{ $val->email }}</td>
@@ -104,7 +104,7 @@
                             <td>{{ $val->login_number }}</td>
                             <td>
                                 <label class="pull-center inline">
-                                    <input type="checkbox" @if($val->is_state == 1) checked @endif class="ace ace-switch ace-switch-3" onclick="set_effect({{$val->id}},this);" />
+                                    <input type="checkbox" @if($val->is_effect == 1) checked @endif class="ace ace-switch ace-switch-3" onclick="set_effect({{$val->id}},this);" />
                                     <span class="lbl"></span>
                                 </label>
                             </td>
@@ -176,6 +176,64 @@
         });
     }
 
+    //更改用户状态
+    function set_effect(id,obj){
+        $.ajax({
+            type:"POST",
+            url:"{{ url('newwebadmin/set_effect') }}",
+            data:{'table':'users',id:id,'_token':"<?php echo csrf_token();?>"},
+            dataType:"json",
+            success:function(data){
+                //alert(data.is_effect);
+            }
+        })
+    }
+
+    //完全删除
+    function foreverdel(id)
+    {
+
+        if(!id)
+        {
+
+            idBox = $(".checkbox:checked");
+            if(idBox.length == 0)
+            {
+                layer.msg("请选择要删除的数据", {icon: 1});
+                return;
+            }
+            idArray = new Array();
+            $.each( idBox, function(i, n){
+                idArray.push($(n).val());
+            });
+            id = idArray.join(",");
+        }
+
+
+        layer.confirm('您确定要删除吗？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            var _token = '{{csrf_token()}}';
+            //异步删除
+            $.post('{{ url('newwebadmin/foreverdel') }}',{'table':'users',id:id,'_token':_token},function(data){
+                if(data.status == '1'){
+                    //$(obj).parent().parent().remove();
+                    layer.msg(data.msg, {icon: 1});
+                    location.href = location.href;
+
+                }else{
+                    layer.msg(data.msg, {icon: 5});
+                }
+
+
+            },'json');
+
+        }, function(){
+
+        });
+
+
+    }
 
 </script>
 @stop

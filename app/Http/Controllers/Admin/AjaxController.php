@@ -33,5 +33,32 @@ class AjaxController extends Controller
             return response()->json(array('msg'=> '更新成功','is_effect'=>$is_effect), 200);
         }
     }
+    
+    /*
+     * 根据表名与id删除数据
+     */
+    public function foreverdel()
+    {
+        $table = Input::get("table");
+        $id = Input::get('id');
+        $ids = explode(',',$id);
+        if(!empty($ids)){
+            foreach($ids as $k=>$v){
+                if($v == 'on'){
+                    unset($ids[$k]);
+                }
+            }
+        }
+        if(count($ids)==0){
+            return response()->json(array('msg'=> '请选择要删除的数据','status'=>0), 200);
+        }
+
+        if($table && $ids){
+            foreach($ids as $key=>$val){
+                DB::table($table)->where('id','=',$val)->delete();
+            }
+        }
+        return response()->json(array('msg'=> '批量删除成功','status'=>1), 200);
+    }
 
 }

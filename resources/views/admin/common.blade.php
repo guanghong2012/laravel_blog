@@ -149,7 +149,7 @@
                         </li>
 
                         <li>
-                            <a href="jqgrid.html">
+                            <a href="{{ url('newwebadmin/user/create') }}">
                                 <i class="icon-double-angle-right"></i>
                                 会员添加
                             </a>

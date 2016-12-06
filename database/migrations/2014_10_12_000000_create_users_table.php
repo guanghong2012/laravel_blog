@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('phone')->unique();
             $table->string('password', 60);
             $table->integer('login_number')->comment("登陆次数：默认0")->default(0);
-            $table->tinyInteger("state")->comment("状态，默认0：正常；1废除")->default(0);
+            $table->tinyInteger("is_effect")->comment("状态，默认1：正常；1禁用")->default(1);
             $table->tinyInteger("level")->comment("等级，默认0：普通；1：一般会员")->default(0);
             $table->rememberToken();
             $table->timestamps();

@@ -33,6 +33,8 @@ Route::group(['prefix'=>'newwebadmin','namespace'=>'Admin','middleware' => 'admi
     Route::any('set_effect','AjaxController@set_effect');//后台设置信息状态
     Route::any('admin_user_add','AdminUserController@add');//后台管理员添加
     Route::resource('user', 'UserController');//资源路由 用户管理
+    Route::resource('category', 'CategoryController');//资源路由 文章分类管理
+    Route::any('foreverdel','AjaxController@foreverdel');//后台永久删除信息
 });
 
 Route::get('newwebadmin/login',"Admin\\IndexController@login");//后台登录
