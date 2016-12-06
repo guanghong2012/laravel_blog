@@ -157,7 +157,7 @@
                     </ul>
                 </li>
 
-                <li>
+                <li {!! isset($category_active) ? 'class="open active"' : '' !!}>
                     <a href="#" class="dropdown-toggle">
                         <i class="icon-folder-open-alt"></i>
                         <span class="menu-text"> 文章分类 </span>
@@ -165,16 +165,16 @@
                         <b class="arrow icon-angle-down"></b>
                     </a>
 
-                    <ul class="submenu">
+                    <ul class="submenu" {!! isset($category_active) ? 'style="display: block;"' : '' !!}>
                         <li>
-                            <a href="form-elements.html">
+                            <a href="{{ url('newwebadmin/category') }}">
                                 <i class="icon-double-angle-right"></i>
-                                分类类别
+                                分类列表
                             </a>
                         </li>
 
                         <li>
-                            <a href="form-wizard.html">
+                            <a href="{{ url('newwebadmin/category/create') }}">
                                 <i class="icon-double-angle-right"></i>
                                 分类添加
                             </a>
@@ -183,7 +183,7 @@
                     </ul>
                 </li>
 
-                <li>
+                <li {!! isset($article_active) ? 'class="open active"' : '' !!}>
                     <a href="#" class="dropdown-toggle">
                         <i class="icon-edit"></i>
                         <span class="menu-text"> 文章管理 </span>
@@ -191,16 +191,16 @@
                         <b class="arrow icon-angle-down"></b>
                     </a>
 
-                    <ul class="submenu">
+                    <ul class="submenu" {!! isset($article_active) ? 'style="display: block;"' : '' !!}>
                         <li>
-                            <a href="form-elements.html">
+                            <a href="{{ url('newwebadmin/article') }}">
                                 <i class="icon-double-angle-right"></i>
                                 文章列表
                             </a>
                         </li>
 
                         <li>
-                            <a href="form-wizard.html">
+                            <a href="{{ url('newwebadmin/article/create') }}">
                                 <i class="icon-double-angle-right"></i>
                                 文章添加
                             </a>

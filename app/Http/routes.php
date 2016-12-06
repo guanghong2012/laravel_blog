@@ -34,6 +34,7 @@ Route::group(['prefix'=>'newwebadmin','namespace'=>'Admin','middleware' => 'admi
     Route::any('admin_user_add','AdminUserController@add');//后台管理员添加
     Route::resource('user', 'UserController');//资源路由 用户管理
     Route::resource('category', 'CategoryController');//资源路由 文章分类管理
+    Route::resource('article', 'ArticleController');//资源路由 文章管理
     Route::any('foreverdel','AjaxController@foreverdel');//后台永久删除信息
 });
 
