@@ -339,7 +339,9 @@ window.jQuery || document.write("<script src='"+aapath+"'>"+"<"+"script>");
 <script src="{{ asset('admin_assets/js/typeahead-bs2.min.js') }}"></script>
 
 <!-- page specific plugin scripts -->
+@section('page_plugin_js')
 
+@show
 <!--[if lte IE 8]>
   <script src="{{ asset('admin_assets/js/excanvas.min.js')}}"></script>
 <![endif]-->

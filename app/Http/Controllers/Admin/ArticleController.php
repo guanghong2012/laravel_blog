@@ -23,4 +23,14 @@ class ArticleController extends Controller
         return view('admin/Article/index',['title' => '文章列表','article_active' => 'active','articles' => $articles]);
     }
     
+    //文章编辑 get newwebadmin/article/{id}/edit
+    public function edit($id)
+    {
+        if(!$id){
+            return back();
+        }
+        $article = Article::where('id','=',$id)->first();
+        return view('admin/Article/edit',['title' => '编辑文章','article_active' => 'active','article' => $article]);
+    }
+    
 }

@@ -159,6 +159,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Mews\Captcha\CaptchaServiceProvider::class,
+        Zhangmazi\Ueditor\UeditorServiceProivder::class,
     ],
 
     /*
