@@ -9,6 +9,8 @@
 @stop
 
 @section('main-content')
+    <script src="{{ asset('js/jquery.js?t=1476958143') }}"></script>
+    <script src="{{ asset('layer/layer.js?v=2.4') }}"></script>
     <div class="breadcrumbs" id="breadcrumbs">
         <script type="text/javascript">
             try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
@@ -51,9 +53,7 @@
             <div class="col-xs-12">
                 <!-- PAGE CONTENT BEGINS -->
                 <!--右侧部分开始-->
-                <style type="text/css">
-                    .J_cate_select{width:210px;height:25px;}
-                </style>
+
                 <div class="table-header">
                     <a href="{{ url('newwebadmin/article') }}" class="btn btn-sm btn-success" ><i class="icon-arrow-left"></i>返回列表</a>
                 </div><!--表格上方蓝色部分 -->
@@ -66,7 +66,7 @@
 
                         <div class="col-sm-4">
 
-                            <select class="form-control" id="form-field-select-1" name="cate_id">
+                            <select class="form-control" id="form-field-select-1" name="pid">
 
                                 <option value='1' selected="selected"> 关于网站</option>
                                 <option value='7' >&nbsp;├ 关于众筹</option>
@@ -85,6 +85,15 @@
 
                         <div class="col-sm-9">
                             <input type="text" name="name" id="form-field-1" placeholder="信息名称" class="col-xs-10 col-sm-5" value="{{ $article->name }}" />
+
+                            @if($errors->has("name"))
+                                <script>
+                                    layer.tips("{{ $errors->first("name") }}",$("#form-field-1"), {
+                                        tips: [2, '#e53e49'],
+                                        tipsMore: true
+                                    });
+                                </script>
+                            @endif
                         </div>
 
                     </div>
@@ -93,7 +102,16 @@
                         <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 文章标题: </label>
 
                         <div class="col-sm-9">
-                            <input type="text" name="title" id="form-field-1" placeholder="文章标题" class="col-xs-10 col-sm-5" value="{{ $article->title }}" />
+                            <input type="text" name="title" id="title" placeholder="文章标题" class="col-xs-10 col-sm-5" value="{{ $article->title }}" />
+
+                            @if($errors->has("title"))
+                                <script>
+                                    layer.tips("{{ $errors->first("title") }}",$("#title"), {
+                                        tips: [2, '#e53e49'],
+                                        tipsMore: true
+                                    });
+                                </script>
+                            @endif
                         </div>
 
                     </div>
@@ -114,7 +132,7 @@
                             <label class="col-sm-2 control-label no-padding-right" for="form-field-3"> 发布日期: </label>
 
                             <div class="col-sm-9">
-                                <input type="text" class="col-xs-10 col-sm-5" name="create_time" id="create_time" value="{{ $article->created_at }}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" />
+                                <input type="text" class="col-xs-10 col-sm-5" name="created_at" id="create_time" value="{{ $article->created_at }}" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})" />
                                 <label class="laydate-icon"></label>
                             </div>
 
@@ -149,13 +167,13 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label no-padding-right" for="form-field-7"> 描述: </label>
                             <div class="col-sm-9">
-                                <textarea class="form-control" style="width:50%;" name="description" id="form-field-7" placeholder="描述">{{ $article->discription }}</textarea>
+                                <textarea class="form-control" style="width:50%;" name="description" id="form-field-7" placeholder="描述">{{ $article->description }}</textarea>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label no-padding-right" for="form-field-7"> 详细内容: </label>
                             @include("zhangmazi::ueditor")
-                            <div style="width:900px;float:left;">
+                            <div id="content" style="width:900px;float:left;">
                                 <script id="demo_full_toolbar" name="content" type="text/plain">{!! $article->content !!}</script>
                                 <script type="text/javascript">
                                     // 定义默认编辑器高度
@@ -190,6 +208,15 @@
 
                                 </script>
                             </div>
+
+                            @if($errors->has("content"))
+                                <script>
+                                    layer.tips("{{ $errors->first("content") }}",$("#content"), {
+                                        tips: [2, '#e53e49'],
+                                        tipsMore: true
+                                    });
+                                </script>
+                            @endif
                         </div>
 
                         <div class="clearfix form-actions">
@@ -222,4 +249,21 @@
 <!--当前页面需要用到的js-->
 @section('page_script')
 
+    <script>
+        @if( Session::has('pageMsg') )
+        layer.alert('{{Session::get('pageMsg')}}', {
+            icon: 5,
+            shadeClose: true,
+            title: "操作失败"
+        });
+        @endif
+
+        @if( Session::has('pageSuccess') )
+    layer.alert('{{Session::get('pageSuccess')}}', {
+            icon: 1,
+            shadeClose: true,
+            title: "操作成功"
+        });
+        @endif
+    </script>
 @stop

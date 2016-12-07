@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Article;//这个必须有，引入model，不然无法获取数据库数据
+use Illuminate\Support\Facades\Input;
 
 class ArticleController extends Controller
 {
@@ -32,5 +33,40 @@ class ArticleController extends Controller
         $article = Article::where('id','=',$id)->first();
         return view('admin/Article/edit',['title' => '编辑文章','article_active' => 'active','article' => $article]);
     }
+
+    //文章更新 put/patche (需要在表单里面用一个隐藏的<input name="_method" type="hidden" value="put" />) newwebadmin/article/{id}
+    public function update(Request $request,$id)
+    {
+        if(!$id){
+            return back();
+        }
+        $data = $request->all();
+        $this->validate($request,[
+            'pid' => 'required',
+            'name' => 'required',
+            'title' => 'required',
+            'content' => 'required',
+
+        ],[
+            "pid.required" => "请选择文章分类",
+            "name.required" => "文章名称不能为空",
+            "title.required" => "文章标题不能为空",
+            "content.required" => "文章内容不能为空",
+
+
+        ]);
+
+        $article = Article::where('id','=',$id)->first();
+        unset($data['_token']);
+        unset($data['_method']);
+        if($article->update($data)){
+            return redirect('newwebadmin/article/'.$id.'/edit')->with('pageSuccess','文章更新成功！');
+        }else{
+            back()->with('pageMsg','更新失败！')->withInput();
+        }
+
+
+    }
+
     
 }
