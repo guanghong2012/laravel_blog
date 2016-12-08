@@ -36,7 +36,9 @@ Route::group(['prefix'=>'newwebadmin','namespace'=>'Admin','middleware' => 'admi
     Route::resource('category', 'CategoryController');//资源路由 文章分类管理
     Route::resource('article', 'ArticleController');//资源路由 文章管理
     Route::any('foreverdel','AjaxController@foreverdel');//后台永久删除信息
+    Route::any('imageupload','IndexController@imageupload');//后台图片上传
 });
 
 Route::get('newwebadmin/login',"Admin\\IndexController@login");//后台登录
 Route::post('newwebadmin/dologin','Admin\\IndexController@dologin');//后台登录处理
+

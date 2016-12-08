@@ -120,7 +120,11 @@
                         <label class="col-sm-2 control-label no-padding-right" for="form-field-99"> 图片: </label>
 
                         <div class="col-sm-9">
-                            <div class="none_border"><input type="hidden"  id="id_images" name="images" style="width:120px; height:25px;" value='' /><a class="ke-icon"  href="javascript:;" onclick="open_upload('images','images')" title="图片上传"><span class="button button_huise">图片上传</span></a><img src="/ase_admin/Public/Admin/images/no_pic.gif" onclick="" style='display:inline-block; float:left; cursor:pointer; margin-left:10px; border:#ccc solid 1px; width:35px; height:35px;' id='img_images' /><img src="/ase_admin/Public/Admin/images/del.gif" style='display:none; margin-left:10px; float:left; border:#ccc solid 1px; width:35px; height:35px; cursor:pointer;' id='img_del_images' onclick='delimg("images")' title='删除' />
+                            <div class="none_border">
+                                <input type="hidden"  id="id_images" name="images" style="width:120px; height:25px;" value='' />
+                                <a class="ke-icon"  href="javascript:;" onclick="open_upload('images','images')" title="图片上传"><span class="button button_huise">图片上传</span></a>
+                                <img src="/ase_admin/Public/Admin/images/no_pic.gif" onclick="" style='display:inline-block; float:left; cursor:pointer; margin-left:10px; border:#ccc solid 1px; width:35px; height:35px;' id='img_images' />
+                                <img src="/ase_admin/Public/Admin/images/del.gif" style='display:none; margin-left:10px; float:left; border:#ccc solid 1px; width:35px; height:35px; cursor:pointer;' id='img_del_images' onclick='delimg("images")' title='删除' />
                                 <label style="margin:10px;color:red;">*(这里填写图片大小指示，例：600px*800px)</label>
                             </div>
 

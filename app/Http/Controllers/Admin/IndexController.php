@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Hash;
 use App\Models\Admin;//这个必须有，引入model，不然无法获取数据库数据
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class IndexController extends Controller
 {
@@ -76,6 +78,58 @@ class IndexController extends Controller
 
         return back()->withErrors($validator)->withInput();
 
+    }
+
+    /*
+     * 图片上传
+     */
+    public function imageupload(Request $request)
+    {
+        if($request->isMethod('POST')){
+            //文件是否上传成功
+            $file = $request->file('source');
+            if($file->isValid()){
+                //原文件名
+                $originalName = $file->getClientOriginalName();
+                //扩展名
+                $ext = $file->getClientOriginalExtension();
+                //type
+                $type = $file->getClientMimeType();
+                //临时绝对路径
+                $realpath = $file->getRealPath();
+
+                $filename = date('YmdHis').'-'.uniqid().'.'.$ext;
+
+                $bool = Storage::disk('public')->put($filename,file_get_contents($realpath));//这里选择的是自定义的磁盘uploads上传
+
+                if($bool){
+                    //echo '文件上传成功,你可以在此进行文件的压缩，截取操作';
+                    $datepath = date('Ymd');
+                    $newsavepath = env('IMAGE_SAVEPATH').$datepath;//自定义文件保存路径
+                    if(!is_dir($newsavepath)){
+                        mkdir($newsavepath,775,true);
+                    }
+                    $makepath = str_replace("\\","/",storage_path('app/uploads'));//文件保存路径 storage/app/uploads/
+
+                    $files = storage_path('app/public').'/'.$filename;//使用框架自带上传功能上传后文件保存的物理路径
+                    $makefiles = $makepath.'/'.$datepath.'/'.$filename;//最后生成文件的物理路径
+
+                    //$img = Image::make($files)->resize(300, 200)->save($makefiles);// 修改指定图片的大小
+                    $img = Image::make($files)->save($makefiles);//不修改图片大小 直接保存 使用 Intervention 插件处理文件
+
+                    unlink($files);//删除 使用框架自带上传功能上传后保存的文件
+                    dd($img);
+                }else{
+                    echo '文件上传失败';
+                }
+
+
+            }
+
+        }else{
+
+            return view('admin.imageupload');
+        }
     }
 
     
