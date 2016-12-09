@@ -65,8 +65,45 @@ class ArticleController extends Controller
             back()->with('pageMsg','更新失败！')->withInput();
         }
 
-
     }
 
+    /*
+     * 文章添加
+     * 路由方法：get
+     * 路由：newwebadmin/article/create
+     */
+    public function create()
+    {
+        return view('admin/Article/add',['title' => '文章添加','article_active' => 'active']);
+    }
+
+    /*
+     * 文章添加保存操作
+     * 路由方法：post
+     * 路由：newwebadmin/article
+     */
+    public function store(Request $request)
+    {
+        $data = $request->all();
+        $this->validate($request,[
+            'name' => 'required',
+            'title' => 'required',
+            'content' => 'required',
+        ],[
+            "name.required" => "信息名称不能为空",
+            "title.required" => "标题不能为空",
+            "content.required" => "文章内容不能为空",
+
+        ]);
+
+        unset($$data['_token']);
+        $article = Article::create($data);
+        if($article){
+            return redirect('newwebadmin/article/create')->with('pageSuccess','文章添加成功！');
+        }else{
+            back()->with('pageMsg','添加失败！')->withInput();
+        }
+
+    }
     
 }

@@ -379,6 +379,53 @@ window.jQuery || document.write("<script src='"+aapath+"'>"+"<"+"script>");
         });
     })
 
+    //打开图片上传窗口
+    function open_upload(f_t_name,show_name)
+    {
+        //var url = ROOT+"/"+MODULE_NAME+"/"+CONTROLLER_NAME+"/uploads.html?t_name="+f_t_name+"&show_name="+show_name;
+        var url = "{{ url('newwebadmin/imageupload') }}?t_name="+f_t_name+"&show_name="+show_name;
+
+        window.open(url,"上传文件","toolbar=no,menubar=no,resizable=yes,top="+(screen.availHeight - parseFloat(300))/2+",left="+(screen.availWidth - parseFloat(500))/2+",width=500pt,height=300pt");
+    }
+    //打开图片
+    function openimg(id)
+    {
+        window.open(document.getElementById("img_"+id).src);
+    }
+    //永久删除图片
+    function delimg(id,tablename)
+    {
+        document.getElementById("img_"+id).onclick = function()
+        {
+            return false;
+        }
+        var img = document.getElementById("id_"+id).value;
+
+        layer.confirm('您确定要删除吗？', {
+            btn: ['确定','取消'] //按钮
+        }, function(){
+            var _token = '{{csrf_token()}}';
+            //异步删除
+            $.post('{{ url('newwebadmin/delimage') }}',{images_path:img,tablename:tablename,'_token':_token},function(data){
+                if(data.status == '1'){
+                    //$(obj).parent().parent().remove();
+                    layer.msg(data.msg, {icon: 1});
+                    document.getElementById("img_"+id).src = "{{ asset('admin_assets/images/no_pic.gif') }}";
+                    document.getElementById("img_del_"+id).style.display = "none";
+                    document.getElementById("id_"+id).value = "";
+
+                }else{
+                    layer.msg(data.msg, {icon: 5});
+                }
+
+
+            },'json');
+
+        }, function(){
+
+        });
+
+    }
 </script>
 </body>
 </html>

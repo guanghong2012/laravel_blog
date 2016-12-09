@@ -121,11 +121,16 @@
 
                         <div class="col-sm-9">
                             <div class="none_border">
-                                <input type="hidden"  id="id_images" name="images" style="width:120px; height:25px;" value='' />
+                                <input type="hidden"  id="id_images" name="images"  value="{{ $article->images }}" /><!--图片保存目录-->
                                 <a class="ke-icon"  href="javascript:;" onclick="open_upload('images','images')" title="图片上传"><span class="button button_huise">图片上传</span></a>
-                                <img src="/ase_admin/Public/Admin/images/no_pic.gif" onclick="" style='display:inline-block; float:left; cursor:pointer; margin-left:10px; border:#ccc solid 1px; width:35px; height:35px;' id='img_images' />
-                                <img src="/ase_admin/Public/Admin/images/del.gif" style='display:none; margin-left:10px; float:left; border:#ccc solid 1px; width:35px; height:35px; cursor:pointer;' id='img_del_images' onclick='delimg("images")' title='删除' />
-                                <label style="margin:10px;color:red;">*(这里填写图片大小指示，例：600px*800px)</label>
+                                @if(empty($article->images))
+                                <img src="{{ asset('admin_assets/images/no_pic.gif') }}"  style='display:inline-block; float:left; cursor:pointer; margin-left:10px; border:#ccc solid 1px; width:35px; height:35px;' id='img_images' /><!--无图片显示-->
+                                @else
+                                <img src="{{ $article->images }}" onclick="openimg('images')" style='display:inline-block; float:left; cursor:pointer; margin-left:10px; border:#ccc solid 1px; width:35px; height:35px;' id='img_images' /><!--图片缩略图-->
+                                <img src="{{ asset('admin_assets/images/del.gif') }}" style=' margin-left:10px; float:left; border:#ccc solid 1px; width:35px; height:35px; cursor:pointer;' id='img_del_images' onclick='delimg("images","articles")' title='删除' />
+                                @endif
+
+                                <label style="margin:10px;color:red;">*(图片大小指示：185px*127px)</label>
                             </div>
 
                         </div>
@@ -270,4 +275,6 @@
         });
         @endif
     </script>
+
+
 @stop

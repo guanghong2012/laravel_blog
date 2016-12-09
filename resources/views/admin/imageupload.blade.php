@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Laravel图片上传</title>
 
     <!-- Fonts -->
     <link href="{{ asset('admin_assets/css/font-awesome.min.css') }}" rel='stylesheet' type='text/css'>
@@ -64,7 +64,8 @@
                                 <input type="file" class="form-control" name="source">
                             </div>
                         </div>
-
+                        <input type="hidden" name="t_name" value="{{ $t_name }}">
+                        <input type="hidden" name="show_name" value="{{ $show_name }}">
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">

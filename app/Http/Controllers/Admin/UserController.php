@@ -123,7 +123,7 @@ class UserController extends Controller
 
         ]);
 
-        $user = User::forceCreate([
+        $user = User::firstOrCreate([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],

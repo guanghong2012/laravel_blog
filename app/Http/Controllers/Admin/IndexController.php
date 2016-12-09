@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Hash;
@@ -85,7 +86,10 @@ class IndexController extends Controller
      */
     public function imageupload(Request $request)
     {
+        $t_name = $request->input('t_name');//要传回到模板的目标id
+        $show_name = $request->input('show_name');//要展示图片的目标id
         if($request->isMethod('POST')){
+
             //文件是否上传成功
             $file = $request->file('source');
             if($file->isValid()){
@@ -105,11 +109,11 @@ class IndexController extends Controller
                 if($bool){
                     //echo '文件上传成功,你可以在此进行文件的压缩，截取操作';
                     $datepath = date('Ymd');
-                    $newsavepath = env('IMAGE_SAVEPATH').$datepath;//自定义文件保存路径
+                    $newsavepath = 'attachment/'.$datepath;//自定义文件保存路径
                     if(!is_dir($newsavepath)){
                         mkdir($newsavepath,775,true);
                     }
-                    $makepath = str_replace("\\","/",storage_path('app/uploads'));//文件保存路径 storage/app/uploads/
+                    $makepath = str_replace("\\","/",public_path('attachment'));//文件保存路径 storage/app/uploads/
 
                     $files = storage_path('app/public').'/'.$filename;//使用框架自带上传功能上传后文件保存的物理路径
                     $makefiles = $makepath.'/'.$datepath.'/'.$filename;//最后生成文件的物理路径
@@ -118,7 +122,20 @@ class IndexController extends Controller
                     $img = Image::make($files)->save($makefiles);//不修改图片大小 直接保存 使用 Intervention 插件处理文件
 
                     unlink($files);//删除 使用框架自带上传功能上传后保存的文件
-                    dd($img);
+                    if($img){
+                        $returnpath = '/'.$newsavepath.'/'.$filename;//要保存到数据库的文件目录
+
+                        echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
+                        echo '<SCRIPT>
+                                    alert("上传成功！");
+                                    parent.opener.document.getElementById("id_'.$t_name.'").value="'.$returnpath.'";
+                                    parent.opener.document.getElementById("img_'.$show_name.'").src="'.$returnpath.'";
+                                    parent.window.close();
+                                </SCRIPT>';
+                        exit;
+                    }
+
+
                 }else{
                     echo '文件上传失败';
                 }
@@ -127,10 +144,31 @@ class IndexController extends Controller
             }
 
         }else{
+            //echo public_path();
 
-            return view('admin.imageupload');
+            return view('admin.imageupload',['t_name'=>$t_name,'show_name'=>$show_name]);
         }
     }
 
-    
+    /*
+     * 图片删除
+     */
+    public function delimage(Request $request)
+    {
+        $images_path = $request->input('images_path');
+        $tablename = $request->input('tablename');
+        $info = DB::table($tablename)->where('images','=',$images_path)->first();
+        if($info){
+            $num = DB::table($tablename)->where('images','=',$images_path)->update(['images'=>'']);
+        }
+        $res = unlink('.'.$images_path);
+        if($res){
+            return response()->json(array('msg'=> '删除成功','status'=>1), 200);
+        }else{
+            return response()->json(array('msg'=> '删除失败','status'=>0), 200);
+        }
+    }
+
+
+
 }
