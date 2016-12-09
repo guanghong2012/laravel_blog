@@ -38,6 +38,8 @@ Route::group(['prefix'=>'newwebadmin','namespace'=>'Admin','middleware' => 'admi
     Route::any('foreverdel','AjaxController@foreverdel');//后台永久删除信息
     Route::any('imageupload','IndexController@imageupload');//后台图片上传
     Route::any('delimage','IndexController@delimage');//后台永久删除图片
+    Route::get('comment','CommentController@index');//后台留言列表
+    Route::post('comment_delete','CommentController@delete');//后台留言删除
 });
 
 Route::get('newwebadmin/login',"Admin\\IndexController@login");//后台登录

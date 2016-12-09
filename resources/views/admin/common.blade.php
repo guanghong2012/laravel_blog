@@ -209,7 +209,7 @@
                     </ul>
                 </li>
 
-                <li>
+                <li {!! isset($comment_active) ? 'class="open active"' : '' !!}>
                     <a href="#" class="dropdown-toggle">
                         <i class="icon-edit"></i>
                         <span class="menu-text"> 留言管理 </span>
@@ -217,9 +217,9 @@
                         <b class="arrow icon-angle-down"></b>
                     </a>
 
-                    <ul class="submenu">
+                    <ul class="submenu" {!! isset($comment_active) ? 'style="display: block;"' : '' !!}>
                         <li>
-                            <a href="form-elements.html">
+                            <a href="{{ url('newwebadmin/comment') }}">
                                 <i class="icon-double-angle-right"></i>
                                 留言列表
                             </a>
