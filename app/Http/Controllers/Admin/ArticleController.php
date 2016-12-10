@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Article;//这个必须有，引入model，不然无法获取数据库数据
 use Illuminate\Support\Facades\Input;
-
+use Tree;
 class ArticleController extends Controller
 {
     //文章列表 路由 newwebadmin/article
@@ -17,11 +18,24 @@ class ArticleController extends Controller
         $input = $request;
         if($input->name){
             $articles = Article::where('name','like','%'.$input->name.'%')->orderBy('id','desc')->paginate(10);
+        }elseif($input->pid > 0){
+            $articles = Article::where('pid','=',$input->pid)->orderBy('id','desc')->paginate(10);
         }else{
             $articles = Article::orderBy('id','desc')->paginate(10);
         }
+        foreach($articles as $key=>$val){
+            $catename = Category::where('id','=',$val->pid)->pluck("name");
+            $articles[$key]['catename'] = $catename[0];
+        }
 
-        return view('admin/Article/index',['title' => '文章列表','article_active' => 'active','articles' => $articles]);
+        //文章分类
+        $article_cate = Category::get()->toArray();
+        $tree = new Tree;           // new 之前请记得包含tree文件!
+        $tree->init($article_cate);        // 数据格式请参考 tree方法上面的注释!
+        $str = "<option value=\$id >\$spacer\$name</option>"; //这个是没有选中的写法 传入数组中 selected 值可选
+        $category = $tree->get_tree(0,$str);
+
+        return view('admin/Article/index',['title' => '文章列表','article_active' => 'active','articles' => $articles,'category'=>$category]);
     }
     
     //文章编辑 get newwebadmin/article/{id}/edit
@@ -31,7 +45,20 @@ class ArticleController extends Controller
             return back();
         }
         $article = Article::where('id','=',$id)->first();
-        return view('admin/Article/edit',['title' => '编辑文章','article_active' => 'active','article' => $article]);
+        $pid = $article->pid;
+        //文章分类
+        $category = Category::get()->toArray();
+        foreach($category as $k=>$r){
+            $r['selected'] = $r['id'] == $pid ? 'selected="selected"' : '';
+            $r['name'] = $r['name'];
+            $array[] = $r;
+        }
+        $tree = new Tree;
+        $tree->init($array);
+        $str  = "<option value='\$id' \$selected>\$spacer \$name</option>";
+        $select_menus = $tree->get_tree(0, $str);
+
+        return view('admin/Article/edit',['title' => '编辑文章','article_active' => 'active','article' => $article,'select_menus'=>$select_menus]);
     }
 
     //文章更新 put/patche (需要在表单里面用一个隐藏的<input name="_method" type="hidden" value="put" />) newwebadmin/article/{id}
@@ -74,7 +101,13 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('admin/Article/add',['title' => '文章添加','article_active' => 'active']);
+        //文章分类
+        $article_cate = Category::get()->toArray();
+        $tree = new Tree;           // new 之前请记得包含tree文件!
+        $tree->init($article_cate);        // 数据格式请参考 tree方法上面的注释!
+        $str = "<option value=\$id >\$spacer\$name</option>"; //这个是没有选中的写法 传入数组中 selected 值可选
+        $category = $tree->get_tree(0,$str);
+        return view('admin/Article/add',['title' => '文章添加','article_active' => 'active','category'=>$category]);
     }
 
     /*

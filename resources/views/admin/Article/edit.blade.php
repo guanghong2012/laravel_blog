@@ -67,14 +67,7 @@
                         <div class="col-sm-4">
 
                             <select class="form-control" id="form-field-select-1" name="pid">
-
-                                <option value='1' selected="selected"> 关于网站</option>
-                                <option value='7' >&nbsp;├ 关于众筹</option>
-                                <option value='11' >&nbsp;├ 联系我们</option>
-                                <option value='12' >&nbsp;├ 用户协议</option>
-                                <option value='14' >&nbsp;│&nbsp;└ 测试添加三级</option>
-                                <option value='13' >&nbsp;└ 疑问解答</option>
-                                <option value='9' > 新手帮助</option>
+                                {!! $select_menus !!}
                             </select>
 
                         </div>

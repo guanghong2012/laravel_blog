@@ -60,9 +60,10 @@
                             <div class="col-sm-2">
 
                                 <label>分类：
-                                    <select name="cate_id">
+                                    <select name="pid">
                                         <option value="0" selected="selected">全部</option>
-                                        <option value="1"  >关于网站</option><option value="7"  >关于众筹</option><option value="9"  >新手帮助</option><option value="11"  >联系我们</option><option value="12"  >用户协议</option><option value="13"  >疑问解答</option><option value="14"  >测试添加三级</option>						</select>
+                                        {!! $category !!}
+                                    </select>
                                 </label>
 
                             </div>
@@ -98,10 +99,12 @@
                         <tbody>
                         @foreach($articles as $key=>$val)
                         <tr>
-                            <td align="center"><label><input type="checkbox" name="key" class="ace checkbox" value="{{ $val->id }}" /><span class="lbl"></span></label></td>
+                            <td align="center">
+                                <label><input type="checkbox" name="key" class="ace checkbox" value="{{ $val->id }}" /><span class="lbl"></span></label>
+                            </td>
                             <td>{{ $val->id }}</td>
                             <td><a href="{{ url('newwebadmin/article/'.$val->id.'/edit') }}">{{ $val->name }}</a></td>
-                            <td>关于网站</td>
+                            <td>{{ $val->catename }}</td>
                             <td><span class='sort_span' onclick='set_sort(1,10,this);'>{{ $val->sort }}</span></td>
                             <td>{{ $val->keywords }}</td>
                             <td>{{ $val->click }}</td>
