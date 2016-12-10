@@ -16,14 +16,6 @@ class Category extends Model
     //指定主键
     protected $primaryKey = 'id';
 
-    /**
-     * The attributes that are mass assignable.
-     * 指定允许批量赋值的字段
-     * @var array
-     */
-    protected $fillable = [
-        'name'
-    ];
 
     //指定不允许批量赋值的字段
     protected $guarded = [];

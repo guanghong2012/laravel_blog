@@ -129,7 +129,7 @@ class ArticleController extends Controller
 
         ]);
 
-        unset($$data['_token']);
+        unset($data['_token']);
         $article = Article::create($data);
         if($article){
             return redirect('newwebadmin/article/create')->with('pageSuccess','文章添加成功！');
