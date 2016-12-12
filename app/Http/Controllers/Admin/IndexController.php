@@ -71,6 +71,7 @@ class IndexController extends Controller
                 session()->put('adm_role_id', $admin->role_id);
                 session()->put('adm_is_effect', $admin->role_id);
                 session()->put('adm_login_ip', $admin->login_ip);
+                session()->put('adm_name', $admin->adm_name);
                 return redirect("newwebadmin/index");
             }
         }else{
@@ -169,6 +170,17 @@ class IndexController extends Controller
         }
     }
 
-
-
+    /*
+     * 后台用户退出登录
+     */
+    public function logout()
+    {
+        session()->forget('adm_user_id');
+        session()->forget('adm_role_id');
+        session()->forget('adm_is_effect');
+        session()->forget('adm_login_ip');
+        session()->forget('adm_name');
+        return redirect('newwebadmin/login');
+    }
+    
 }

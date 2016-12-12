@@ -138,5 +138,20 @@ class ArticleController extends Controller
         }
 
     }
+
+    /*
+     * 删除
+     * delete
+     * newwebadmin/article/{id}
+     */
+    public function destroy($id)
+    {
+        $num = Article::destroy([$id]);
+        if($num>0){
+            return response()->json(array('msg'=> '删除成功','status'=>1), 200);
+        }else{
+            return response()->json(array('msg'=> '删除失败','status'=>0), 200);
+        }
+    }
     
 }

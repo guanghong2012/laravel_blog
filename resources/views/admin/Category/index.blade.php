@@ -125,13 +125,13 @@
 @section('page_script')
     <script src="{{ asset('/layer/layer.js?v=2.4') }}"></script>
     <script>
-        function deluser(id){
+        function delcate(id){
             layer.confirm('您确定要删除吗？', {
                 btn: ['确定','取消'] //按钮
             }, function(){
                 var _token = '{{csrf_token()}}';
                 //异步删除
-                $.post('{{ url('newwebadmin/article/') }}/'+id,{'_method':'delete','_token':_token},function(data){
+                $.post('{{ url('newwebadmin/category/') }}/'+id,{'_method':'delete','_token':_token},function(data){
                     if(data.status == '1'){
                         //$(obj).parent().parent().remove();
                         layer.msg(data.msg, {icon: 1});
@@ -176,7 +176,7 @@
             }, function(){
                 var _token = '{{csrf_token()}}';
                 //异步删除
-                $.post('{{ url('newwebadmin/foreverdel') }}',{'table':'articles',id:id,'_token':_token},function(data){
+                $.post('{{ url('newwebadmin/foreverdel') }}',{'table':'categorys',id:id,'_token':_token},function(data){
                     if(data.status == '1'){
                         //$(obj).parent().parent().remove();
                         layer.msg(data.msg, {icon: 1});

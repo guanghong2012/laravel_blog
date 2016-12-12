@@ -43,7 +43,7 @@
                 分类管理
                 <small>
                     <i class="icon-double-angle-right"></i>
-                    添加分类
+                    分类编辑
                 </small>
             </h1>
         </div><!-- /.page-header -->
@@ -56,7 +56,7 @@
                 <div class="table-header">
                     <a href="{{ url('newwebadmin/category') }}" class="btn btn-sm btn-success" ><i class="icon-arrow-left"></i>返回列表</a>
                 </div><!--表格上方蓝色部分 -->
-                <form class="form-horizontal" method="post" action="{{ url('newwebadmin/category') }}" role="form" >
+                <form class="form-horizontal" method="post" action="{{ url('newwebadmin/category/'.$info->id) }}" role="form" >
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label class="col-sm-2 control-label no-padding-right" for="form-field-select-1"> 上级分类:</label>
@@ -73,7 +73,7 @@
                         <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 分类名称: </label>
 
                         <div class="col-sm-9">
-                            <input type="text" name="name" id="form-field-1" placeholder="分类名称" value="{{ old('name') }}" class="col-xs-10 col-sm-5" />
+                            <input type="text" name="name" id="form-field-1" placeholder="分类名称" value="{{ $info->name }}" class="col-xs-10 col-sm-5" />
                         </div>
                         @if($errors->has("name"))
                             <script>
@@ -89,7 +89,7 @@
                         <label class="col-sm-2 control-label no-padding-right" for="form-field-1"> 分类标题: </label>
 
                         <div class="col-sm-9">
-                            <input type="text" name="title" id="form-field-2" value="{{ old('title') }}" placeholder="分类标题" class="col-xs-10 col-sm-5" />
+                            <input type="text" name="title" id="form-field-2" value="{{ $info->title }}" placeholder="分类标题" class="col-xs-10 col-sm-5" />
                         </div>
                         @if($errors->has("title"))
                             <script>
@@ -103,15 +103,15 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label no-padding-right" for="form-field-7"> 分类描述: </label>
                         <div class="col-sm-9">
-                            <textarea class="form-control" style="width:50%;" name="description" id="form-field-7" placeholder="分类描述">{{ old('description') }}</textarea>
+                            <textarea class="form-control" style="width:50%;" name="description" id="form-field-7" placeholder="分类描述">{{ $info->description }}</textarea>
                         </div>
                     </div>
-
+                    <input name="_method" type="hidden" value="put" /><!--表单隐藏域-->
                     <div class="clearfix form-actions">
                         <div class="col-md-offset-3 col-md-9">
                             <button class="btn btn-info" type="submit">
                                 <i class="icon-ok bigger-110"></i>
-                                新增				</button>
+                                提交				</button>
 
                             &nbsp; &nbsp; &nbsp;
                             <button class="btn" type="reset">
@@ -130,7 +130,7 @@
     </div><!-- /.page-content -->
 
 
-@stop
+    @stop
             <!--插件js-->
 @section('page_plugin_js')
     <script type="text/javascript" src="{{asset('laydate/laydate.js')}}"></script><!--日期js-->

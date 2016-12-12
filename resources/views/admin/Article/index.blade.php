@@ -112,7 +112,7 @@
                             <td>
                                 <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
                                     <a class="btn btn-primary btn-xs" href="{{ url('newwebadmin/article/'.$val->id.'/edit') }}"><i class="icon-edit">编辑</i></a>&nbsp;
-                                    <a class="btn btn-danger btn-xs" href="javascript: deluser('{{ $val->id }}')"><i class="icon-trash">删除</i></a>&nbsp;
+                                    <a class="btn btn-danger btn-xs" href="javascript: del('{{ $val->id }}')"><i class="icon-trash">删除</i></a>&nbsp;
                                 </div>
                             </td>
                         </tr>
@@ -156,7 +156,7 @@
 @section('page_script')
     <script src="{{ asset('/layer/layer.js?v=2.4') }}"></script>
     <script>
-        function deluser(id){
+        function del(id){
             layer.confirm('您确定要删除吗？', {
                 btn: ['确定','取消'] //按钮
             }, function(){

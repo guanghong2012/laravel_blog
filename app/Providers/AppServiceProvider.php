@@ -14,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-        $allcategorys = Category::orderBy('sort','desc')->get();
+        $allcategorys = Category::where('pid','=',0)->orderBy('sort','desc')->get();
         view()->share('allcategorys', $allcategorys);
     }
 

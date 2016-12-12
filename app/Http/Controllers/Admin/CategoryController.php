@@ -19,7 +19,7 @@ class CategoryController extends Controller
         $array = $array['data'];
         foreach($array as $k=>$v){
             $array[$k]['url'] = url('newwebadmin/category/'.$v['id'].'/edit');
-            $array[$k]['add_url'] = url('newwebadmin/category/create');
+            $array[$k]['add_url'] = url('newwebadmin/category/create').'?pid='.$v['id'];
         }
 
         $tree = new Tree;
@@ -39,7 +39,7 @@ class CategoryController extends Controller
                                     <div class='visible-md visible-lg hidden-sm hidden-xs btn-group'>
                                     <a class='btn btn-success btn-xs' href='\$add_url'><i class='icon-plus'>添加子菜单</i></a>
                                     <a class='btn btn-primary btn-xs' href='\$url'><i class='icon-edit'>编辑</i></a>
-                                    <a class='btn btn-danger btn-xs gallery-tool' href='javascript:foreverdel(9)'><i class='icon-trash'>删除</i></a>
+                                    <a class='btn btn-danger btn-xs gallery-tool' href='javascript:delcate(\$id)'><i class='icon-trash'>删除</i></a>
                                     </div>
                                 </td>
                             </tr>";
@@ -53,13 +53,22 @@ class CategoryController extends Controller
     /*
      * 新建分类 
      */
-    public function create()
+    public function create(Request $request)
     {
+        $pid = $request->input('pid');
         //文章分类
         $article_cate = Category::get()->toArray();
+
+        foreach($article_cate as $k=>$r){
+            $r['selected'] = $r['id'] == $pid ? 'selected="selected"' : '';
+
+            $r['name'] = $r['name'];
+            $array[] = $r;
+        }
+
         $tree = new Tree;           // new 之前请记得包含tree文件!
-        $tree->init($article_cate);        // 数据格式请参考 tree方法上面的注释!
-        $str = "<option value=\$id >\$spacer\$name</option>"; //这个是没有选中的写法 传入数组中 selected 值可选
+        $tree->init($array);        // 数据格式请参考 tree方法上面的注释!
+        $str = "<option value='\$id' \$selected >\$spacer\$name</option>"; //这个是没有选中的写法 传入数组中 selected 值可选
         $category = $tree->get_tree(0,$str);
         return view('admin/Category/add',['title'=>'新建分类','category_active' => 'active','category'=>$category]);
     }
@@ -91,4 +100,81 @@ class CategoryController extends Controller
 
     }
 
+    /*
+     * 分类编辑
+     * get
+     * newwebadmin/category/{id}/edit
+     */
+    public function edit($id)
+    {
+        if(!$id){
+            return back();
+        }
+        $info = Category::where('id','=',$id)->first();
+        $pid = $info->pid;
+        $category = Category::get()->toArray();
+
+        foreach($category as $k=>$r){
+            $r['selected'] = $r['id'] == $pid ? 'selected="selected"' : '';
+
+            $r['name'] = $r['name'];
+            $array[] = $r;
+        }
+        $tree = new Tree;
+        $tree->init($array);
+        $str  = "<option value='\$id' \$selected>\$spacer \$name</option>";
+        $select_menus = $tree->get_tree(0, $str);
+
+        return view('admin/Category/edit',['title'=>'分类编辑','category_active' => 'active','category'=>$select_menus,'info'=>$info]);
+    }
+
+    /*
+     * 分类编辑保存
+     * put/patche (需要在表单里面用一个隐藏的<input name="_method" type="hidden" value="put" />)
+     * newwebadmin/category/{id}
+     */
+    public function update(Request $request,$id)
+    {
+        if(!$id){
+            return back();
+        }
+        $data = $request->all();
+        $this->validate($request,[
+            'name' => 'required',
+            'title' => 'required',
+            'description' => 'required',
+
+        ],[
+            "name.required" => "分类名称不能为空",
+            "title.required" => "分类标题不能为空",
+            "description.required" => "分类描述不能为空",
+
+        ]);
+        unset($data['_token']);
+        unset($data['_method']);
+        $category = Category::where('id','=',$id)->first();
+        if($category->update($data)){
+            return redirect('newwebadmin/category/'.$id.'/edit')->with('pageSuccess','分类更新成功！');
+        }else{
+            back()->with('pageMsg','更新失败！')->withInput();
+        }
+
+    }
+
+    /*
+     * 删除
+     * delete
+     * newwebadmin/category/{id}
+     */
+    public function destroy($id)
+    {
+        $num = Category::destroy([$id]);
+        if($num>0){
+            return response()->json(array('msg'=> '删除成功','status'=>1), 200);
+        }else{
+            return response()->json(array('msg'=> '删除失败','status'=>0), 200);
+        }
+    }
+    
+    
 }

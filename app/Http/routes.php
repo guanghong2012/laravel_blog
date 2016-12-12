@@ -44,4 +44,5 @@ Route::group(['prefix'=>'newwebadmin','namespace'=>'Admin','middleware' => 'admi
 
 Route::get('newwebadmin/login',"Admin\\IndexController@login");//后台登录
 Route::post('newwebadmin/dologin','Admin\\IndexController@dologin');//后台登录处理
+Route::get('newwebadmin/logout',"Admin\\IndexController@logout");//后台退出登录
 
