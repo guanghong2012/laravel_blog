@@ -198,16 +198,18 @@ trait UeditorUploaderAbstract
         $uploader->waterPicture = $params['water_picture'];
         $uploader->waterPosition = 9;
         $uploader->isSaveOriginFile = $params['need_origin_pic'];
+        /*
         if (app()->bound('image') && class_exists('\Intervention\Image\ImageManager')) {
             $uploader->imageHelper = app()->make('image');
-        }
+        }*/
+        $uploader->imageHelper = null;//2017-01-03 不使用ImageManager 修复无法编辑器无法上传图片bug 温柔一刀
         if ($arr_files) {
             $storage_driver = $this->getStorage()->getDriver();
             $storage_config = $this->getStorageConfig();
             $disk_name = $this->getStorageDiskName();
             $save_root_path = $storage_driver != 'local' ? storage_path('app/public/ueditor/tmp') :
                 $storage_config[$disk_name]['root'];
-            $relative_dir = $this->getRelativeDir();
+            $relative_dir = $this->getRelativeDir().'/'.date('Ymd');//2017-01-03 保存目录添加子目录 温柔一刀
             $visibility = !empty($storage_config[$disk_name]['visibility']) ?
                 $storage_config[$disk_name]['visibility'] : null;
             $url_root = !empty($storage_config[$disk_name]['url_root']) ?
