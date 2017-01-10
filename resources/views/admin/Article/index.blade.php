@@ -112,6 +112,7 @@
                             <td>
                                 <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
                                     <a class="btn btn-primary btn-xs" href="{{ url('newwebadmin/article/'.$val->id.'/edit') }}"><i class="icon-edit">编辑</i></a>&nbsp;
+                                    <a class="btn btn-purple btn-xs" href="{{ url('newwebadmin/article/comment/'.$val->id) }}"><i class="icon-edit">查看评论</i></a>&nbsp;
                                     <a class="btn btn-danger btn-xs" href="javascript: del('{{ $val->id }}')"><i class="icon-trash">删除</i></a>&nbsp;
                                 </div>
                             </td>

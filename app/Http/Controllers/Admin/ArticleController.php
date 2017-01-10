@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\ArticleComment;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -147,6 +148,28 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         $num = Article::destroy([$id]);
+        if($num>0){
+            return response()->json(array('msg'=> '删除成功','status'=>1), 200);
+        }else{
+            return response()->json(array('msg'=> '删除失败','status'=>0), 200);
+        }
+    }
+
+    /*
+     * 文章评论列表
+     */
+    public function comment($id)
+    {
+        $commentlist = ArticleComment::where('articleid','=',$id)->orderBy('id','desc')->paginate(10);
+        return view('admin/Article/commentlist',['title' => '评论列表','article_active' => 'active','commentlist' => $commentlist]);
+    }
+
+    /*
+     * 评论删除
+     */
+    public function delcomment($id)
+    {
+        $num = ArticleComment::destroy([$id]);
         if($num>0){
             return response()->json(array('msg'=> '删除成功','status'=>1), 200);
         }else{

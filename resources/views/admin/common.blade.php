@@ -229,6 +229,55 @@
                     </ul>
                 </li>
 
+                <li {!! isset($banner_active) ? 'class="open active"' : '' !!}>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="icon-picture"></i>
+                        <span class="menu-text"> 首页轮播 </span>
+
+                        <b class="arrow icon-angle-down"></b>
+                    </a>
+
+                    <ul class="submenu" {!! isset($banner_active) ? 'style="display: block;"' : '' !!}>
+                        <li>
+                            <a href="{{ url('newwebadmin/banner') }}">
+                                <i class="icon-double-angle-right"></i>
+                                轮播列表
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('newwebadmin/banner/create') }}">
+                                <i class="icon-double-angle-right"></i>
+                                轮播添加
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li {!! isset($nav_active) ? 'class="open active"' : '' !!}>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="icon-list-alt"></i>
+                        <span class="menu-text"> 导航管理 </span>
+
+                        <b class="arrow icon-angle-down"></b>
+                    </a>
+
+                    <ul class="submenu" {!! isset($nav_active) ? 'style="display: block;"' : '' !!}>
+                        <li>
+                            <a href="{{ url('newwebadmin/navigation') }}">
+                                <i class="icon-double-angle-right"></i>
+                                导航列表
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('newwebadmin/navigation/create') }}">
+                                <i class="icon-double-angle-right"></i>
+                                导航添加
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
 
             </ul><!-- /.nav-list -->
 

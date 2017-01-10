@@ -172,6 +172,23 @@
                                 <textarea class="form-control" style="width:50%;" name="description" id="form-field-7" placeholder="描述">{{ $article->description }}</textarea>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label no-padding-right" for="form-field-6"> 是否推荐: </label>
+                            <div class="col-sm-9">
+                                <div class="radio">
+                                    <label>
+                                        <input name="is_recommend" type="radio" class="ace" value="0" @if($article->is_recommend == 0) checked @endif />
+                                        <span class="lbl"> 否</span>
+                                    </label>
+                                    <label>
+                                        <input name="is_recommend" type="radio" class="ace" value="1" @if($article->is_recommend == 1) checked @endif />
+                                        <span class="lbl"> 是</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label class="col-sm-2 control-label no-padding-right" for="form-field-7"> 详细内容: </label>
                             @include("zhangmazi::ueditor")

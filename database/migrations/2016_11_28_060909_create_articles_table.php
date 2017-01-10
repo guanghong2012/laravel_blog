@@ -23,6 +23,7 @@ class CreateArticlesTable extends Migration
             $table->text('content')->comment("文章内容");
             $table->integer('click')->comment("浏览次数")->default(0);
             $table->integer('sort')->comment("排序")->default(0);
+            $table->tinyInteger('is_recommend')->comment("是否推荐0=否1=是")->default(0);
             $table->timestamps();
         });
     }

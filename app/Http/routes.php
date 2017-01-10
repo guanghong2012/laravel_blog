@@ -20,8 +20,11 @@ Route::any('login','Web\\HomeController@login');
 Route::get('logout','Web\\HomeController@logout');
 Route::get('lists/pid/{pid}','Web\\ArticleController@lists');//文章列表
 Route::get('detail/id/{id}','Web\\ArticleController@detail');//文章详情
+Route::get('allcategory/pid/{pid}','Web\\ArticleController@allcategory');//文章分类
 Route::get('about','Web\\HomeController@about');//关于我
-Route::any('comment','Web\\HomeController@comment');//留言板
+Route::any('comment','Web\\CommentController@comment');//留言板
+Route::any('search','Web\\HomeController@search');//搜索
+Route::any('addcomment','Web\\ArticleController@addcomment');//文章评价
 
 Route::controller("api","Web\\GlobalController");//获取图片验证码
 
@@ -40,6 +43,10 @@ Route::group(['prefix'=>'newwebadmin','namespace'=>'Admin','middleware' => 'admi
     Route::any('delimage','IndexController@delimage');//后台永久删除图片
     Route::get('comment','CommentController@index');//后台留言列表
     Route::post('comment_delete','CommentController@delete');//后台留言删除
+    Route::resource('banner','BannerController');//首页轮播
+    Route::resource('navigation','NavigationController');//导航管理
+    Route::get('article/comment/{id}','ArticleController@comment');//文章评论
+    Route::any('article/comment/delcomment/{id}','ArticleController@delcomment');//文章评论删除
 });
 
 Route::get('newwebadmin/login',"Admin\\IndexController@login");//后台登录

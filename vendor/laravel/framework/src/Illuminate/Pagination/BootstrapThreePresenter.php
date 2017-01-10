@@ -76,9 +76,10 @@ class BootstrapThreePresenter implements PresenterContract
      */
     protected function getAvailablePageWrapper($url, $page, $rel = null)
     {
+        $class = is_null($rel) ? '' : ' class="'.$rel.'"';
         $rel = is_null($rel) ? '' : ' rel="'.$rel.'"';
 
-        return '<li><a href="'.htmlentities($url).'"'.$rel.'>'.$page.'</a></li>';
+        return '<li '.$class.'><a href="'.htmlentities($url).'"'.$rel.'>'.$page.'</a></li>';
     }
 
     /**

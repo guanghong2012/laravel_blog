@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Models\ArticleComment;
+use App\Models\Banner;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -11,25 +13,42 @@ use Illuminate\Support\Facades\Validator;
 use Hash;
 use App\Models\Article;//这个必须有，引入model，不然无法获取数据库数据
 use App\Models\Category;//这个必须有，引入model，不然无法获取数据库数据
-use App\Models\Comment;//这个必须有，引入model，不然无法获取数据库数据
 
 class HomeController extends Controller
 {
-
+    public $module = 'home'; // 标识当前模块为'article'
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct() {
+        parent::__construct();
+    }
     //首页
     public function index()
     {
-        $article = Article::take(5)->orderBy('sort','desc')->get();//推荐文章5篇
-        foreach($article as $key=>$value){
-            $cate_name = Category::where('id','=',$value->pid)->pluck('name');//获取当前文章分类名称
-            $article[$key]['cate_name'] = $cate_name[0];
-        }
+        //取出推荐的一篇文章
+        $article = Article::where('is_recommend','=','1')->orderBy('sort','desc')->first();//推荐文章1篇
+        $cate_name = Category::where('id','=',$article->pid)->pluck('name');//获取当前文章分类名称
+        $article->cate_name = $cate_name[0];
         //最新文章
-        $new_article = Article::take(8)->orderBy('created_at','desc')->get();//最新文章8篇
+        //$new_article = Article::take(8)->orderBy('created_at','desc')->get();//最新文章8篇
+        $new_article = Article::orderBy('created_at','desc')->simplePaginate(5);//最新文章8篇
+        foreach($new_article as $key=>$item){
+            $cate = Category::where('id','=',$item->pid)->pluck('name');//获取当前文章分类名称
+            $total_comment = ArticleComment::where('articleid','=',$item->id)->count();
+            $new_article[$key]['cate_name'] = $cate[0];
+            $new_article[$key]['total_comment'] = $total_comment;
+        }
         //点击排行
         $hot_article = Article::take(5)->orderBy('click','desc')->get();//点击排行5篇
-
-        return view('web.home',['title'=>'博客首页','article'=>$article,'new_article' => $new_article,'hot_article' => $hot_article]);
+        //首页轮播
+        $banner = Banner::orderBy('sort','desc')->get();
+        //网站公告
+        $notice = Article::where('pid','=',8)->take(3)->get();
+        //return view('web.home',['title'=>'博客首页','article'=>$article,'new_article' => $new_article,'hot_article' => $hot_article]);
+        return view('newtpl.home',['title'=>'博客首页','article'=>$article,'new_article' => $new_article,'hot_article' => $hot_article,'banner'=>$banner,'notice'=>$notice]);
     }
     
     //注册 
@@ -145,45 +164,29 @@ class HomeController extends Controller
         return view('web.about',['title'=>'关于我']);
     }
 
-    //留言板
-    public function comment(Request $request)
+    /*
+     * 搜索
+     */
+    public function search(Request $request)
     {
-        if($request->isMethod('POST')){
-            $this->validate($request,[
-                "name"      =>  "required",
-                "email"     =>  "required",
-                "phone"     =>  "required",
-                "captcha"   =>  "required",
-                "comment"   => "required"
-            ],[
-                "name.required"     =>"请填写您的名称",
-                "email.required" =>"请填写您的邮箱地址",
-                "phone.required"    =>"请填写手机号",
-                "captcha.required"  =>"请填写验证码",
-                "comment.required"  =>"请输入您的留言内容",
-            ]);
-            $ispass = captcha_check($request->captcha); //返回bool
-            if($ispass){
-                $comments = Comment::forceCreate([
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'phone' => $request->phone,
-                    'comment' => $request->comment,
-                    'addtime' => time()
-
-                ]);
-                if($comments){
-                    return redirect('/');
-                }
-
-            }else{
-                return back()->with("pageMsg","注册失败")->with("level","fail");
-            }
-
-        }else{
-            return view('web.comment',['title' => '留言板']);
+        $keyword = $request->keyword;
+        if(empty($keyword)){
+            return back();
         }
-
+        //搜索结果
+        $articles = Article::where('name','like','%'.$keyword.'%')->orWhere('title','like','%'.$keyword.'%')->orWhere('description','like','%'.$keyword.'%')->orderBy('id','desc')->paginate(10);
+        foreach($articles as $key=>$item){
+            $cate = Category::where('id','=',$item->pid)->first();
+            $articles[$key]['cate_name'] = $cate->name;
+        }
+        //点击排行
+        $hot_article = Article::take(5)->orderBy('click','desc')->get();//点击排行5篇
+        return view('newtpl.search',[
+            'title'=>'搜索结果',
+            'keyword'=>$keyword,
+            'articles'=>$articles,
+            'hot_article' => $hot_article
+        ]);
     }
     
 }
